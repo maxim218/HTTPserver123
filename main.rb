@@ -40,8 +40,12 @@ while (session = server.accept)
   # separator
   session.print "\r\n"
 
-  # answer
-  session.print "I am Maxim"
+  if url == "/hello/"
+    # answer
+    session.print "I am Maxim"
+  else
+
+  end
 
   session.close
 end
