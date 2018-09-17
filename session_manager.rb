@@ -3,6 +3,14 @@ class Session_manager
     @http_type_string = ""
     @headers_string = ""
     @body_answer_string = ""
+    add_basic_headers
+  end
+
+  def add_basic_headers
+    add_headers_string "Cache-Control: no-cache, no-store, must-revalidate"
+    add_headers_string "Server: Maxim Kolotovkin Server"
+    add_headers_string "Date: #{Time.now}"
+    add_headers_string"Connection: keep-alive"
   end
 
   def set_http_type_string (string_param)

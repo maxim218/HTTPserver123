@@ -1,7 +1,6 @@
 require 'socket'
 require_relative 'router.rb'
 require_relative 'pair.rb'
-require_relative 'session_manager.rb'
 
 port_number = 5005
 server = TCPServer.new port_number
@@ -37,24 +36,7 @@ while (session = server.accept)
     print "Url do not have variables" + "\n"
   end
 
-  # http type
-  session.print "HTTP/1.1 200\r\n"
-
-  # headers
-  session.print "Cache-Control: no-cache, no-store, must-revalidate\r\n"
-  session.print "Server: Maxim Kolotovkin Server\r\n"
-  session.print "Date: #{Time.now}\r\n"
-  session.print "Connection: keep-alive\r\n"
-
-  # separator
-  session.print "\r\n"
-
-  if url == "/hello/"
-    # answer
-    session.print "I am Maxim"
-  else
-    route_query url, pairs_array, session
-  end
+  route_query url, pairs_array, session
 
   session.close
 end
