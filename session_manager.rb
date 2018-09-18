@@ -15,7 +15,7 @@ class Session_manager
     add_headers_string "Cache-Control: no-cache, no-store, must-revalidate"
     add_headers_string "Server: Maxim-Kolotovkin-Server"
     add_headers_string "Date: #{Time.now}"
-    add_headers_string"Connection: keep-alive"
+    add_headers_string "Connection: keep-alive"
   end
 
   def set_http_type_string (string_param)
@@ -36,15 +36,8 @@ class Session_manager
       full_result_string = @http_type_string.to_s + @headers_string.to_s + "\r\n" + @body_answer_string.to_s
     end
     if @method == "HEAD"
-      full_result_string = @http_type_string.to_s + @headers_string.to_s
-      buffer = ""
-      for i in 0...full_result_string.length - 2
-        buffer = buffer + full_result_string[i]
-      end
-      full_result_string = buffer.to_s
-      print "Answer:" + "\n"
-      print full_result_string
+      full_result_string = @http_type_string.to_s + @headers_string.to_s + "\r\n" + ""
     end
-    full_result_string.to_s
+    full_result_string
   end
 end

@@ -15,7 +15,7 @@ def route_query (url, pairs_array, session, method)
   end
 
   file_exists_flag = File.exist? file_name.to_s
-  if file_exists_flag == TRUE
+  if file_exists_flag
     arr = file_name.split(".")
     type = (arr[arr.length-1] + "").to_s
     if type == "html"

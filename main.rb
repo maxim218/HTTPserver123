@@ -3,6 +3,8 @@ require_relative 'router.rb'
 require_relative 'pair.rb'
 require_relative 'session_manager.rb'
 require_relative 'bad_method'
+require_relative 'folder_list_control'
+require_relative 'get_forbidden_403'
 
 port_number = 5005
 server = TCPServer.new port_number
@@ -46,7 +48,11 @@ while (session = server.accept)
 
     url = url.split("?")[0].to_s
 
-    route_query url, pairs_array, session, method
+    if folder_list_control url
+      route_query url, pairs_array, session, method
+    else
+      get_forbidden_403 session
+    end
 
     session.close
   end
