@@ -8,7 +8,7 @@ class Session_manager
 
   def add_basic_headers
     add_headers_string "Cache-Control: no-cache, no-store, must-revalidate"
-    add_headers_string "Server: Maxim Kolotovkin Server"
+    add_headers_string "Server: Maxim-Kolotovkin-Server"
     add_headers_string "Date: #{Time.now}"
     add_headers_string"Connection: keep-alive"
   end
