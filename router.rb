@@ -18,6 +18,10 @@ def route_query (url, pairs_array, session, method)
   if file_exists_flag
     arr = file_name.split(".")
     type = (arr[arr.length-1] + "").to_s
+    if type == "txt"
+      give_file url, pairs_array, session, file_name.to_s, "TXT", method
+      return
+    end
     if type == "html"
       give_file url, pairs_array, session, file_name.to_s, "HTML", method
       return

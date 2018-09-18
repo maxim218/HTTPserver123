@@ -12,6 +12,9 @@ def give_file (url, pairs_array, session, file_name, file_type, method)
   end
   manager.set_http_type_string "HTTP/1.1 200"
   manager.set_body_answer_string f_content
+  if file_type == "TXT"
+    manager.add_headers_string "Content-Type: text/plain"
+  end
   if file_type == "HTML"
     manager.add_headers_string "Content-Type: text/html"
   end

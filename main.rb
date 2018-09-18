@@ -1,4 +1,5 @@
 require 'socket'
+require 'uri'
 require_relative 'router.rb'
 require_relative 'pair.rb'
 require_relative 'session_manager.rb'
@@ -47,6 +48,7 @@ while (session = server.accept)
     end
 
     url = url.split("?")[0].to_s
+    url = URI.unescape(url)
 
     if folder_list_control url
       route_query url, pairs_array, session, method
