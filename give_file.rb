@@ -1,12 +1,15 @@
 require_relative 'session_manager.rb'
 
-def give_file (url, pairs_array, session, file_name, file_type)
+def give_file (url, pairs_array, session, file_name, file_type, method)
   f = open file_name.to_s
   f_content = f.read
   f_length = File.size(file_name).to_s
   f.close
   manager = Session_manager.new
   manager.init_fields
+  if method == "HEAD"
+    manager.set_method "HEAD"
+  end
   manager.set_http_type_string "HTTP/1.1 200"
   manager.set_body_answer_string f_content
   if file_type == "HTML"

@@ -3,7 +3,12 @@ class Session_manager
     @http_type_string = ""
     @headers_string = ""
     @body_answer_string = ""
+    @method = "GET"
     add_basic_headers
+  end
+
+  def set_method (method_string)
+    @method = method_string.to_s
   end
 
   def add_basic_headers
@@ -26,7 +31,20 @@ class Session_manager
   end
 
   def get_full_result
-    full_result_string = @http_type_string.to_s + @headers_string.to_s + "\r\n" + @body_answer_string.to_s
+    full_result_string = ""
+    if @method == "GET"
+      full_result_string = @http_type_string.to_s + @headers_string.to_s + "\r\n" + @body_answer_string.to_s
+    end
+    if @method == "HEAD"
+      full_result_string = @http_type_string.to_s + @headers_string.to_s
+      buffer = ""
+      for i in 0...full_result_string.length - 2
+        buffer = buffer + full_result_string[i]
+      end
+      full_result_string = buffer.to_s
+      print "Answer:" + "\n"
+      print full_result_string
+    end
     full_result_string.to_s
   end
 end

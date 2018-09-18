@@ -13,7 +13,9 @@ while (session = server.accept)
   method = arr[0].to_s
   url = arr[1].to_s
 
-  if method.upcase != "GET" && method.upcase != "HEAD"
+  method = method.upcase
+
+  if method != "GET" && method != "HEAD"
     bad_method (session)
     session.close
   else
@@ -42,7 +44,9 @@ while (session = server.accept)
       print "Url do not have variables" + "\n"
     end
 
-    route_query url, pairs_array, session
+    url = url.split("?")[0].to_s
+
+    route_query url, pairs_array, session, method
 
     session.close
   end
