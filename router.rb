@@ -1,6 +1,7 @@
 require_relative 'session_manager.rb'
 require_relative 'give_file.rb'
 require_relative 'get_error_404_code.rb'
+require_relative 'get_forbidden_403'
 
 def route_query (url, pairs_array, session, method)
 
@@ -9,9 +10,12 @@ def route_query (url, pairs_array, session, method)
     return
   end
 
+  error_type = 404
+
   file_name = "." + url
   if file_name[file_name.length - 1] == '/'
     file_name = file_name + "index.html"
+    error_type = 403
   end
 
   file_exists_flag = File.exist? file_name.to_s
@@ -55,6 +59,10 @@ def route_query (url, pairs_array, session, method)
       return
     end
   else
-    get_error_404_code (session)
+    if error_type == 404
+      get_error_404_code (session)
+    elsif error_type == 403
+      get_forbidden_403 (session)
+    end
   end
 end
