@@ -10,10 +10,12 @@ require_relative 'write_line'
 require_relative 'files_manager.rb'
 
 CLONES_NUMBER = 2
+PORT_NUMBER = 5005
 
-port_number = 5005
-server = TCPServer.new port_number
+# **********************************************
+# **********************************************
 
+server = TCPServer.new PORT_NUMBER.to_i
 
 # **********************************************
 # **********************************************
@@ -63,6 +65,7 @@ while (session = server.accept)
     pairs_array = Array.new
 
     print "-------------------------------------" + "\n"
+    print "PID: " + Process.pid.to_s + "\n"
     print "Method: " + method + "\n"
     print "Url: " + url + "\n"
 
