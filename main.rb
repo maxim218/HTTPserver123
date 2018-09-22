@@ -10,13 +10,14 @@ require_relative 'write_line'
 require_relative 'files_manager.rb'
 require_relative 'allow_write'
 
-CLONES_NUMBER = 3
+CLONES_NUMBER = 1
 PORT_NUMBER = 5005
 
 # **********************************************
 # **********************************************
 
 server = TCPServer.new PORT_NUMBER.to_i
+server.listen 1000
 
 # **********************************************
 # **********************************************
