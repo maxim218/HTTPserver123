@@ -1,4 +1,5 @@
 require_relative 'session_manager.rb'
+require_relative 'allow_write'
 
 def give_file (url, pairs_array, session, file_name, file_type, method)
   f = open file_name.to_s
@@ -37,7 +38,9 @@ def give_file (url, pairs_array, session, file_name, file_type, method)
     manager.add_headers_string "Content-Type: application/x-shockwave-flash"
   end
   manager.add_headers_string "Content-Length: " + f_length.to_s
-  print "Size: " + f_length.to_s + "\n"
+  if allow_write
+    print "Size: " + f_length.to_s + "\n"
+  end
   result = manager.get_full_result
   session.print result.to_s
 end

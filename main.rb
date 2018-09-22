@@ -8,8 +8,9 @@ require_relative 'folder_list_control'
 require_relative 'get_forbidden_403'
 require_relative 'write_line'
 require_relative 'files_manager.rb'
+require_relative 'allow_write'
 
-CLONES_NUMBER = 2
+CLONES_NUMBER = 3
 PORT_NUMBER = 5005
 
 # **********************************************
@@ -51,52 +52,72 @@ end
 
 
 while (session = server.accept)
-  arr = session.gets.split(" ")
-
-  method = arr[0].to_s
-  url = arr[1].to_s
-
-  method = method.upcase
-
-  if method != "GET" && method != "HEAD"
-    bad_method (session)
-    session.close
-  else
-    pairs_array = Array.new
-
+  if allow_write
     print "-------------------------------------" + "\n"
     print "PID: " + Process.pid.to_s + "\n"
-    print "Method: " + method + "\n"
-    print "Url: " + url + "\n"
+  end
 
-    print "Variables: " + "\n"
+  session_gets_string = session.gets
 
-    if url.split("?").length > 1
-      mass = url.split("?")[1].split("&")
-      n = mass.length
-      (0...n).each {|i|
-        pair = mass[i]
-        a = pair.to_s.split"="
-        k = a[0].to_s
-        v = a[1].to_s
-        print "Key: " + k + "   Value: " + v + "\n"
-        pair_obj = Pair.new
-        pair_obj.init_fields(k,v)
-        pairs_array.push(pair_obj)
-      }
-    else
-      print "Url do not have variables" + "\n"
+  if session_gets_string
+    arr = session_gets_string.split(" ")
+
+    if allow_write
+      print "Arr: " + arr.to_s + "\n"
     end
 
-    url = url.split("?")[0].to_s
-    url = URI.unescape(url)
+    method = arr[0].to_s
+    url = arr[1].to_s
 
-    if folder_list_control url
-      route_query url, pairs_array, session, method
+    method = method.upcase
+
+    if method != "GET" && method != "HEAD"
+      bad_method (session)
+      session.close
     else
-      get_forbidden_403 session
-    end
+      pairs_array = Array.new
 
-    session.close
+      if allow_write
+        print "Method: " + method + "\n"
+        print "Url: " + url + "\n"
+        print "Variables: " + "\n"
+      end
+
+      if url.split("?").length > 1
+        mass = url.split("?")[1].split("&")
+        n = mass.length
+        (0...n).each {|i|
+          pair = mass[i]
+          a = pair.to_s.split"="
+          k = a[0].to_s
+          v = a[1].to_s
+          if allow_write
+            print "Key: " + k + "   Value: " + v + "\n"
+          end
+          pair_obj = Pair.new
+          pair_obj.init_fields(k,v)
+          pairs_array.push(pair_obj)
+        }
+      else
+        if allow_write
+          print "Url do not have variables" + "\n"
+        end
+      end
+
+      url = url.split("?")[0].to_s
+      url = URI.unescape(url)
+
+      if folder_list_control url
+        route_query url, pairs_array, session, method
+      else
+        get_forbidden_403 session
+      end
+
+      session.close
+    end
+  else
+    if allow_write
+      print "Session is NULL problem !!!" + "\n"
+    end
   end
 end
