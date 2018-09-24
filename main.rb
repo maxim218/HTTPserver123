@@ -9,6 +9,11 @@ require_relative 'get_forbidden_403'
 require_relative 'write_line'
 require_relative 'files_manager.rb'
 require_relative 'allow_write'
+require_relative 'config_reader.rb'
+
+document_root = config_reader
+write_line
+print "Root: " + document_root.to_s + "\n"
 
 CLONES_NUMBER = 1
 PORT_NUMBER = 5005
@@ -68,7 +73,7 @@ while (session = server.accept)
     end
 
     method = arr[0].to_s
-    url = arr[1].to_s
+    url = document_root.to_s + arr[1].to_s
 
     method = method.upcase
 
