@@ -1,3 +1,3 @@
 def allow_write
-  true
+  false
 end
