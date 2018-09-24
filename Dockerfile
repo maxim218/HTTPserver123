@@ -11,8 +11,6 @@ ENV APP /root/app
 ADD ./ $APP
 WORKDIR $APP
 
-RUN ruby main.rb
-
 EXPOSE 5005
 
 CMD ruby main.rb
