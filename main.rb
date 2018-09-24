@@ -23,7 +23,7 @@ write_line
 print "Root: " + document_root.to_s + "\n"
 
 CLONES_NUMBER = 1
-PORT_NUMBER = 5005
+PORT_NUMBER = 80
 
 # **********************************************
 # **********************************************
