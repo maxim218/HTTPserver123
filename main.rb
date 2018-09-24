@@ -1,5 +1,6 @@
 require 'socket'
 require 'uri'
+require 'etc'
 require_relative 'router.rb'
 require_relative 'pair.rb'
 require_relative 'session_manager.rb'
@@ -11,7 +12,13 @@ require_relative 'files_manager.rb'
 require_relative 'allow_write'
 require_relative 'config_reader.rb'
 
+user_login = Etc.getlogin
 document_root = config_reader
+if document_root != ""
+  document_root = "/home/" + user_login + document_root
+else
+  document_root = "."
+end
 write_line
 print "Root: " + document_root.to_s + "\n"
 

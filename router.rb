@@ -12,7 +12,7 @@ def route_query (url, pairs_array, session, method)
 
   error_type = 404
 
-  file_name = "." + url
+  file_name = url.to_s
   if file_name[file_name.length - 1] == '/'
     file_name = file_name + "index.html"
     error_type = 403
