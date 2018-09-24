@@ -15,7 +15,7 @@ require_relative 'config_reader.rb'
 user_login = Etc.getlogin
 document_root = config_reader
 if document_root != ""
-  document_root = "/home/" + user_login + document_root
+  document_root = document_root
 else
   document_root = "."
 end

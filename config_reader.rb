@@ -3,7 +3,7 @@ require_relative 'files_manager.rb'
 
 def config_reader
   user_login = Etc.getlogin
-  file_name_with_config = "/home/" + user_login.to_s + "/etc/httpd.conf"
+  file_name_with_config = "/etc/httpd.conf"
   b = File.exist?  file_name_with_config
   not_exists = false
   if b == not_exists
